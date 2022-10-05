@@ -7,20 +7,12 @@
 // - reversestring("apple") == "elppa"
 // - reversestring("hello") == "olleh"
 // - reversestring("Greetings!") == "!sgniteerG"
-//
-// # Solution 1: (appending to the begining)
-//
-// ## Pseudocode
-//
-// - Create an empty string called 'reversed'
-// - for each character in provided string
-//   - Take the character and add it to the start of 'reversed'
-// - Return 'reversed'
+
 pub fn reversestring(s: &String) -> String {
     let mut reverse = String::new();
 
     for char in s.chars() {
-        reverse = char.to_string() + &reverse[..];
+        reverse = char.to_string() + &reverse;
     }
 
     reverse
