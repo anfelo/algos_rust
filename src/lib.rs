@@ -1,3 +1,4 @@
+pub mod chunk;
 pub mod fizzbuzz;
 pub mod maxchar;
 pub mod palindrome;
