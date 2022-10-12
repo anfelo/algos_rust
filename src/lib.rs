@@ -1,4 +1,5 @@
 pub mod anagrams;
+pub mod capitalize;
 pub mod chunk;
 pub mod fizzbuzz;
 pub mod maxchar;
