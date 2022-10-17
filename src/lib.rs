@@ -4,6 +4,8 @@ pub mod chunk;
 pub mod fizzbuzz;
 pub mod maxchar;
 pub mod palindrome;
+pub mod pyramid;
 pub mod reverseint;
 pub mod reversestring;
+pub mod sorted_squared_array;
 pub mod steps;
