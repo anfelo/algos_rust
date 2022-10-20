@@ -2,6 +2,7 @@ pub mod anagrams;
 pub mod capitalize;
 pub mod chunk;
 pub mod fizzbuzz;
+pub mod matrix;
 pub mod maxchar;
 pub mod palindrome;
 pub mod pyramid;
