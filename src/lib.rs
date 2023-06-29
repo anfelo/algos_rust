@@ -11,3 +11,4 @@ pub mod reversestring;
 pub mod sorted_squared_array;
 pub mod steps;
 pub mod vowels;
+pub mod bubblesort;
