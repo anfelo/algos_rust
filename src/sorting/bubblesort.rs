@@ -6,7 +6,7 @@ pub fn bubblesort_swapped(arr: &mut Vec<i32>) {
         for i in 0..arr.len() - 1 {
             if arr[i] > arr[i + 1] {
                 arr.swap(i, i + 1);
-                swapped = true
+                swapped = true;
             }
         }
     }
