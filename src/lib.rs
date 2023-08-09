@@ -12,3 +12,4 @@ pub mod sorted_squared_array;
 pub mod steps;
 pub mod vowels;
 pub mod sorting;
+pub mod data_structures;
