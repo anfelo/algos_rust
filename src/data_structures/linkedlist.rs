@@ -1,14 +1,8 @@
-use std::mem;
-
 pub struct List {
     head: Link,
 }
 
-#[derive(Debug, PartialEq)]
-enum Link {
-    Empty,
-    More(Box<Node>),
-}
+type Link = Option<Box<Node>>;
 
 #[derive(Debug, PartialEq)]
 struct Node {
@@ -18,35 +12,32 @@ struct Node {
 
 impl List {
     pub fn new() -> Self {
-        List { head: Link::Empty }
+        List { head: None }
     }
 
     pub fn push(&mut self, elem: i32) {
         let new_node = Box::new(Node {
             elem,
-            next: mem::replace(&mut self.head, Link::Empty),
+            next: self.head.take(),
         });
 
-        self.head = Link::More(new_node);
+        self.head = Some(new_node);
     }
 
     pub fn pop(&mut self) -> Option<i32> {
-        match mem::replace(&mut self.head, Link::Empty) {
-            Link::Empty => None,
-            Link::More(node) => {
-                self.head = node.next;
-                Some(node.elem)
-            }
-        }
+        self.head.take().map(|node| {
+            self.head = node.next;
+            node.elem
+        })
     }
 }
 
 impl Drop for List {
     fn drop(&mut self) {
-        let mut cur_link = mem::replace(&mut self.head, Link::Empty);
+        let mut cur_link = self.head.take();
 
-        while let Link::More(mut boxed_node) = cur_link {
-            cur_link = mem::replace(&mut boxed_node.next, Link::Empty);
+        while let Some(mut boxed_node) = cur_link {
+            cur_link = boxed_node.next.take();
         }
     }
 }
@@ -59,7 +50,7 @@ mod tests {
     fn it_creates_empty_list() {
         let list = List::new();
 
-        assert_eq!(list.head, Link::Empty);
+        assert_eq!(list.head, None);
     }
 
     #[test]
@@ -70,9 +61,9 @@ mod tests {
 
         assert_eq!(
             list.head,
-            Link::More(Box::new(Node {
+            Some(Box::new(Node {
                 elem: 42,
-                next: Link::Empty
+                next: None
             }))
         );
     }
@@ -84,7 +75,7 @@ mod tests {
 
         let elem1 = list.pop();
 
-        assert_eq!(list.head, Link::Empty);
+        assert_eq!(list.head, None);
         assert_eq!(elem1, Some(42));
 
         let elem2 = list.pop();
