@@ -1,1 +1,2 @@
-pub mod linkedlist;
+pub mod stack;
+pub mod queue;
