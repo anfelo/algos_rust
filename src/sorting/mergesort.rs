@@ -3,28 +3,18 @@ pub fn mergesort(nums: &mut Vec<i32>, left: usize, right: usize) {
         let middle = left + (right - left) / 2;
         mergesort(nums, left, middle);
         mergesort(nums, middle + 1, right);
-        merge(nums, left, middle, right);
+        merge(nums, left, middle + 1, right);
     }
 }
 
 fn merge(nums: &mut Vec<i32>, left: usize, middle: usize, right: usize) {
-    let n1 = middle - left + 1;
-    let n2 = right - middle;
-    let mut left_nums: Vec<i32> = vec![0; n1];
-    let mut right_nums: Vec<i32> = vec![0; n2];
-
-    // copy data into left and right subarrays
-    for i in 0..n1 {
-        left_nums[i] = nums[left + i];
-    }
-    for j in 0..n2 {
-        right_nums[j] = nums[middle + 1 + j];
-    }
+    let left_nums = nums[left..middle].to_vec();
+    let right_nums = nums[middle..right + 1].to_vec();
 
     let mut i = 0usize;
     let mut j = 0usize;
     let mut k = left;
-    while i < n1 && j < n2 {
+    while i < left_nums.len() && j < right_nums.len() {
         if left_nums[i] <= right_nums[j] {
             nums[k] = left_nums[i];
             i += 1;
@@ -35,13 +25,13 @@ fn merge(nums: &mut Vec<i32>, left: usize, middle: usize, right: usize) {
         k += 1;
     }
 
-    while i < n1 {
+    while i < left_nums.len() {
         nums[k] = left_nums[i];
         i += 1;
         k += 1;
     }
 
-    while j < n2 {
+    while j < right_nums.len() {
         nums[k] = right_nums[j];
         j += 1;
         k += 1;
